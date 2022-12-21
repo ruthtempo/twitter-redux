@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { connect } from "react-redux";
 import { handleAddTweet } from "../actions/tweets";
+import { useNavigate } from "react-router-dom";
 
 const NewTweet = ({ dispatch, id }) => {
   const [text, setText] = useState("");
-
+  const navigate = useNavigate();
   const handleChange = (e) => {
     const text = e.target.value;
     setText(text);
@@ -12,10 +13,15 @@ const NewTweet = ({ dispatch, id }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    //Todo: add tweet to the store
+
     dispatch(handleAddTweet(text, id)); // we get dispatch from props
     console.log(text);
     setText("");
+
+    if (!id) {
+      //if there is no parent tweet ( not replying to any tweet)
+      navigate("/");
+    }
   };
 
   const tweetLeft = 280 - text.length;

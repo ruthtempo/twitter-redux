@@ -6,8 +6,11 @@ import {
   TiHeartOutline,
   TiHeartFullOutline,
 } from "react-icons/ti";
+import { Link, useNavigate } from "react-router-dom";
 
 function Tweet(props) {
+  const navigate = useNavigate();
+
   const handleLike = (e) => {
     e.preventDefault();
     const { dispatch, tweet, authedUser } = props;
@@ -18,22 +21,29 @@ function Tweet(props) {
         authedUser,
       })
     );
-    // TODO: Handle like Tweet
   };
 
   const toParent = (e, id) => {
     e.preventDefault();
-
-    // TODO: Redirect to parent Tweet
+    navigate(`/tweet/${id}`);
   };
   if (props.tweet === null) {
     return <p> this tweet does not exist</p>;
   }
-  const { name, avatar, timestamp, text, hasLiked, likes, replies, parent } =
-    props.tweet;
+  const {
+    name,
+    avatar,
+    timestamp,
+    text,
+    hasLiked,
+    likes,
+    replies,
+    parent,
+    id,
+  } = props.tweet;
 
   return (
-    <div className="tweet">
+    <Link className="tweet" to={`/tweet/${id}`}>
       <img src={avatar} alt={`Avatar of ${name}`} className="avatar" />
       <div className="tweet-info">
         <div>
@@ -62,7 +72,7 @@ function Tweet(props) {
           <span>{likes !== 0 && likes}</span>
         </div>
       </div>
-    </div>
+    </Link>
   );
 }
 
