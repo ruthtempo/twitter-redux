@@ -1,5 +1,6 @@
 import { connect } from "react-redux";
 import { formatTweet, formatDate } from "../utils/helpers";
+import { handleToggleTweet } from "../actions/tweets";
 import {
   TiArrowBackOutline,
   TiHeartOutline,
@@ -9,7 +10,14 @@ import {
 function Tweet(props) {
   const handleLike = (e) => {
     e.preventDefault();
-
+    const { dispatch, tweet, authedUser } = props;
+    dispatch(
+      handleToggleTweet({
+        id: tweet.id,
+        hasLiked: tweet.hasLiked,
+        authedUser,
+      })
+    );
     // TODO: Handle like Tweet
   };
 
